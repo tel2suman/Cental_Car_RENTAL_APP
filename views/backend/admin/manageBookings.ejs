@@ -137,7 +137,7 @@
                                                                     <!-- PAYMENT -->
                                                                     <td>
 
-                                                                        <% if( booking.paymentStatus==="Paid" ) { %>
+                                                                        <% if( booking.paymentStatus==="Success" ) { %>
 
                                                                             <span class="badge badge-success">
                                                                                 Paid
@@ -197,23 +197,14 @@
 
                                                                         <% } %>
 
-                                                                        <% if(
-                                                                            booking.bookingStatus==="Approved"
-                                                                            &&
-                                                                            booking.returnStatus==="Not Returned"
-                                                                            ) { %>
-
-                                                                            <a href="/return-car/<%= booking._id %>"
-                                                                                class="btn btn-warning btn-lg mt-1">
-                                                                                Mark Returned
-                                                                            </a>
-
-                                                                        <% } %>
-
                                                                         <% if( booking.paymentStatus==="Pending" && booking.returnStatus==="Not Returned" ) { %>
 
                                                                             <a href="/return-car/<%= booking._id %>" class="btn btn-info btn-lg mt-1">
                                                                                 Mark Returned
+                                                                            </a>
+
+                                                                            <a href="/reject-booking/<%= booking._id %>" class="btn btn-info btn-lg mt-1">
+                                                                                Reject
                                                                             </a>
 
                                                                             <% } %>

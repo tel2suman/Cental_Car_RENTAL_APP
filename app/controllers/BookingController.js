@@ -109,7 +109,6 @@ class BookingController {
 
       // CREATE BOOKING
       const booking = await Booking.create({
-
         userId: req.user.id,
 
         carId: car._id,
@@ -122,7 +121,7 @@ class BookingController {
 
         totalAmount,
 
-        bookingStatus: "Pending",
+        bookingStatus: "Approved",
 
         paymentStatus: "Pending",
       });
@@ -214,9 +213,9 @@ class BookingController {
 
       // UPDATE BOOKING
       await Booking.findByIdAndUpdate(bookingId, {
-        bookingStatus: "Confirmed",
+        bookingStatus: "Approved",
 
-        paymentStatus: "Paid",
+        paymentStatus: "Success",
       });
 
       // FIND BOOKING
@@ -463,7 +462,7 @@ class BookingController {
 
       booking.bookingStatus = "Approved";
 
-      booking.paymentStatus = "Paid";
+      booking.paymentStatus = "Success";
 
       await booking.save();
 
