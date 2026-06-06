@@ -1,0 +1,162 @@
+<%- include('../layouts/header.ejs') %>
+
+    <%- include('../layouts/topbar.ejs') %>
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a href="/" class="navbar-brand p-0">
+                        <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto py-0">
+                            <a href="/dashboard" class="nav-item nav-link">Home</a>
+                            <a href="/about" class="nav-item nav-link">About</a>
+                            <a href="/available-cars" class="nav-item nav-link">Vehicle</a>
+                            <a href="/my-bookings" class="nav-item nav-link active">My Bookings</a>
+                            <a href="/contact" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="dropdown text-end"> <a href="#"
+                                class="d-block link-body-emphasis text-decoration-none dropdown-toggle badge-pill"
+                                data-bs-toggle="dropdown" aria-expanded="false"> <img src="<%= user.profileImage %>"
+                                    alt="mdo" width="32" height="32" class="rounded-circle mr-3"> <strong class="mx-1">
+                                    <%= user.name %>
+                                </strong></a>
+                            <ul class="dropdown-menu w-100 text-small">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/cancelled-bookings">Cancelled Bookings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    <!-- Navbar & Hero End -->
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-breadcrumb mb-5">
+        <div class="container text-center py-5" style="max-width: 900px;">
+            <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Booking</h4>
+            <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                <li class="breadcrumb-item active text-primary">Booking</li>
+            </ol>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Booking Area -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="card">
+                    <h5 class="card-header">Car Info</h5>
+                    <div class="card-body bg-light">
+                        <picture>
+                            <img src="<%= car.image %>" class="img-fluid rounded w-100" alt="...">
+                        </picture>
+                        <h5 class="card-title mb-3"><%= car.brand %> <%= car.model %></h5>
+                        <div class="rounded">
+                            <p class="mb-3 fs-5"><i class="fa fa-check-circle text-primary me-1"></i>₹<%= car.pricePerDay %> / day</p>
+                            <p class="mb-3 fs-5"><i class="fa fa-check-circle text-primary me-1"></i><%= car.type %></p>
+                            <p class="mb-3 fs-5"><i class="fa fa-check-circle text-primary me-1"></i> <%= car.fuelType %></p>
+                            <p class="mb-0 fs-5"><i class="fa fa-check-circle text-primary me-1"></i> <%= car.location %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-12">
+                <div class="bg-secondary rounded p-5">
+                    <h4 class="text-white mb-4">CONTINUE CAR RESERVATION</h4>
+                    <form method="post" action="/confirm-booking/<%= car._id %>">
+                        <div class="row g-3">
+                            <!-- <div class="col-12">
+                                <label class="form-label">Pick Up Location</label>
+                                <div class="input-group">
+                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                        <span class="fas fa-map-marker-alt"></span> <span class="ms-1">Pick Up</span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Enter a City or Airport"
+                                        aria-label="Enter a City or Airport" required>
+                                </div>
+                            </div> -->
+                            <!-- <div class="col-12">
+                                <label class="form-label">Drop off Location</label>
+                                <div class="input-group">
+                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                        <span class="fas fa-map-marker-alt"></span><span class="ms-1">Drop off</span>
+                                    </div>
+                                    <input class="form-control" type="text" placeholder="Enter a City or Airport"
+                                        aria-label="Enter a City or Airport" required>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <label class="form-label">Pick Up Date</label>
+                                <div class="input-group">
+                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                        <span class="fas fa-calendar-alt"></span><span class="ms-1">Pick Up</span>
+                                    </div>
+                                    <input class="form-control" name="pickupDate" type="date" required>
+                                    <!-- <select class="form-select ms-3" aria-label="Default select example">
+                                        <option selected>12:00AM</option>
+                                        <option value="1">1:00AM</option>
+                                        <option value="2">2:00AM</option>
+                                        <option value="3">3:00AM</option>
+                                        <option value="4">4:00AM</option>
+                                        <option value="5">5:00AM</option>
+                                        <option value="6">6:00AM</option>
+                                        <option value="7">7:00AM</option>
+                                    </select> -->
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Return Date</label>
+                                <div class="input-group">
+                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                        <span class="fas fa-calendar-alt"></span><span class="ms-1">Return</span>
+                                    </div>
+                                    <input class="form-control" name="returnDate" type="date" required>
+                                    <!-- <select class="form-select ms-3" aria-label="Default select example">
+                                        <option selected>12:00AM</option>
+                                        <option value="1">1:00AM</option>
+                                        <option value="2">2:00AM</option>
+                                        <option value="3">3:00AM</option>
+                                        <option value="4">4:00AM</option>
+                                        <option value="5">5:00AM</option>
+                                        <option value="6">6:00AM</option>
+                                        <option value="7">7:00AM</option>
+                                    </select> -->
+                                </div>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-light w-100 py-2">Confirm Booking</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- End of Booking Area -->
+
+
+
+
+    <%- include('../layouts/footer.ejs') %>
+

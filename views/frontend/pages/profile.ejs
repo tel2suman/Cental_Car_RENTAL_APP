@@ -1,0 +1,122 @@
+<%- include('../layouts/header.ejs') %>
+
+    <%- include('../layouts/topbar.ejs') %>
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a href="/" class="navbar-brand p-0">
+                        <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto py-0">
+                                <a href="/dashboard" class="nav-item nav-link">Home</a>
+                                <a href="/about" class="nav-item nav-link">About</a>
+                                <a href="/available-cars" class="nav-item nav-link">Vehicle</a>
+                                <a href="/my-bookings" class="nav-item nav-link active">My Bookings</a>
+                                <a href="/contact" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="dropdown text-end"> <a href="#"
+                                class="d-block link-body-emphasis text-decoration-none dropdown-toggle badge-pill"
+                                data-bs-toggle="dropdown" aria-expanded="false"> <img src="<%= user.profileImage %>" alt="mdo"
+                                    width="32" height="32" class="rounded-circle mr-3"> <strong class="mx-1">
+                                    <%= user.name %>
+                                </strong></a>
+                            <ul class="dropdown-menu w-100 text-small">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/cancelled-bookings">Cancelled Bookings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb mb-5">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Profile</h4>
+                <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active text-primary">Profile</li>
+                </ol>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-12">
+                    <div class="card">
+                        <h5 class="card-header">Profile Info</h5>
+                        <div class="card-body">
+                            <% if(user.profileImage) { %>
+
+                                <img src="<%= user.profileImage %>" class="object-fit-cover border rounded img-fluid">
+
+                                <% } else { %>
+
+                                    <img src="https://via.placeholder.com/150" class="object-fit-cover border rounded img-fluid">
+
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-12">
+                    <div class="card">
+                        <h5 class="card-header">Profile Info</h5>
+                        <div class="card-body">
+                        <form class="row g-3">
+                            <div class="col">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" value="<%= user.name %>" readonly>
+                            </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" value="<%= user.email %>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" value="<%= user.phone %>" readonly>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                    <label class="form-label">Driving License</label>
+                                    <input type="text" class="form-control" value="<%= user.drivingLicense %>" readonly>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" class="form-control" value="<%= user.address %>" readonly>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Password</label>
+                                    <input type="password" class="form-control" value="<%= user.password %>" readonly>
+                                </div>
+                                    <div class="row mt-4">
+                                        <div class="col-lg-6 col-12">
+                                            <a href="/edit-profile" class="btn btn-primary btn-lg w-100">Edit Profile </a>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <a href="/dashboard" class="btn btn-light btn-lg w-100">Back To Home </a>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<%- include('../layouts/footer.ejs') %>

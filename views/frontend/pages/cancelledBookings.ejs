@@ -1,0 +1,239 @@
+<%- include('../layouts/header.ejs') %>
+
+    <%- include('../layouts/topbar.ejs') %>
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a href="/" class="navbar-brand p-0">
+                        <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto py-0">
+                            <a href="/dashboard" class="nav-item nav-link">Home</a>
+                            <a href="/about" class="nav-item nav-link">About</a>
+                            <a href="/available-cars" class="nav-item nav-link">Vehicle</a>
+                            <a href="/my-bookings" class="nav-item nav-link active">My Bookings</a>
+                            <a href="/contact" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="dropdown text-end"> <a href="#"
+                                class="d-block link-body-emphasis text-decoration-none dropdown-toggle badge-pill"
+                                data-bs-toggle="dropdown" aria-expanded="false"> <img src="<%= user?.profileImage %>"
+                                    alt="mdo" width="32" height="32" class="rounded-circle mr-3"> <strong class="mx-1">
+                                    <%= user?.name %>
+                                </strong></a>
+                            <ul class="dropdown-menu w-100 text-small">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/cancelled-bookings">Cancelled Bookings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb mb-5">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Cancelled Bookings</h4>
+                <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active text-primary">Cancelled Bookings</li>
+                </ol>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <div class="container">
+            <div class="row">
+
+                <% if(bookings.length> 0) { %>
+
+                    <% bookings.forEach((booking, index)=> { %>
+
+                        <div class="col-md-4 mb-4">
+
+                            <div class="card shadow border-0 h-100">
+
+                                <!-- CAR IMAGE -->
+                                <img src="<%= booking.carId.image %>" class="card-img-top" alt="Car Image"
+                                    style="height: 220px; object-fit: cover;">
+
+                                <!-- CARD BODY -->
+                                <div class="card-body">
+
+                                    <!-- SERIAL -->
+                                    <div class="mb-2">
+
+                                        <span class="badge badge-danger">
+
+                                            Cancelled Booking #
+                                            <%= index + 1 %>
+
+                                        </span>
+
+                                    </div>
+
+                                    <!-- CAR NAME -->
+                                    <h4 class="mb-3">
+
+                                        <%= booking.carId.brand %>
+                                            <%= booking.carId.model %>
+
+                                    </h4>
+
+                                    <!-- BOOKING DATES -->
+                                    <p>
+
+                                        <strong>Pickup Date:</strong>
+
+                                        <br>
+
+                                        <%= booking.pickupDate.toDateString() %>
+
+                                    </p>
+
+                                    <p>
+
+                                        <strong>Return Date:</strong>
+
+                                        <br>
+
+                                        <%= booking.returnDate.toDateString() %>
+
+                                    </p>
+
+                                    <!-- TOTAL DAYS -->
+                                    <p>
+
+                                        <strong>Total Days:</strong>
+
+                                        <%= booking.totalDays %>
+
+                                    </p>
+
+                                    <!-- TOTAL AMOUNT -->
+                                    <p>
+
+                                        <strong>Total Amount:</strong>
+
+                                        <span class="text-success font-weight-bold">
+
+                                            ₹<%= booking.totalAmount %>
+
+                                        </span>
+
+                                    </p>
+
+                                    <!-- BOOKING STATUS -->
+                                    <p>
+
+                                        <strong>Booking Status:</strong>
+
+                                        <br>
+
+                                        <span class="badge badge-danger p-2">
+
+                                            <%= booking.bookingStatus %>
+
+                                        </span>
+
+                                    </p>
+
+                                    <!-- PAYMENT STATUS -->
+                                    <p>
+
+                                        <strong>Payment Status:</strong>
+
+                                        <br>
+
+                                        <span class="badge badge-warning p-2">
+
+                                            <%= booking.paymentStatus %>
+
+                                        </span>
+
+                                    </p>
+
+                                    <!-- PAYMENT ID -->
+                                    <% if(booking.paymentId) { %>
+
+                                        <p>
+
+                                            <strong>Payment ID:</strong>
+
+                                            <br>
+
+                                            <small class="text-primary">
+
+                                                <%= booking.paymentId %>
+
+                                            </small>
+
+                                        </p>
+
+                                        <% } %>
+
+                                            <!-- CANCEL DATE -->
+                                            <p>
+
+                                                <strong>Cancelled On:</strong>
+
+                                                <br>
+
+                                                <%= booking.updatedAt.toDateString() %>
+
+                                            </p>
+
+                                </div>
+
+                                <!-- FOOTER -->
+                                <div class="card-footer bg-white border-0">
+
+                                    <button class="btn btn-secondary btn-block" disabled>
+
+                                        Booking Cancelled
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <% }) %>
+
+                            <% } else { %>
+
+                                <div class="col-md-12">
+
+                                    <div class="alert alert-warning text-center">
+
+                                        No cancelled bookings found
+
+                                    </div>
+
+                                </div>
+
+                                <% } %>
+
+            </div>
+        </div>
+
+
+    <%- include('../layouts/footer.ejs') %>

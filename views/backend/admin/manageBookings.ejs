@@ -1,0 +1,288 @@
+<%- include('../layouts/header.ejs') %>
+
+    <body id="page-top">
+
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+
+            <!-- Sidebar -->
+            <%- include('../layouts/sidebar.ejs') %>
+                <!-- End of Sidebar -->
+
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
+
+                    <!-- Main Content -->
+                    <div id="content">
+
+                        <!-- Topbar -->
+                        <%- include('../layouts/topbar.ejs') %>
+                            <!-- End of Topbar -->
+
+                            <!-- Begin Page Content -->
+                            <div class="container-fluid">
+
+                                <!-- Page Heading -->
+                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                    <h1 class="h3 mb-0 text-gray-800">Manage Bookings</h1>
+                                </div>
+
+                                <!-- Content Row -->
+
+                                <!-- Content Row -->
+                                <div class="row">
+
+                                    <div class="col-lg-12 mb-4">
+
+                                        <!-- Illustrations -->
+                                        <div class="card shadow mb-4">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%"
+                                                        cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">SL</th>
+                                                                <th class="text-center">User</th>
+                                                                <th class="text-center">Car</th>
+                                                                <th class="text-center">Pickup</th>
+                                                                <th class="text-center">Return</th>
+                                                                <th class="text-center">Amount</th>
+                                                                <th class="text-center">Booking</th>
+                                                                <th class="text-center">Payment</th>
+                                                                <th class="text-center">Return Status</th>
+                                                                <th class="text-center">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <% data.forEach((booking, index)=> { %>
+
+                                                                <tr>
+
+                                                                    <td>
+                                                                        <%= index + 1 %>
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <strong>
+                                                                            <%= booking.userId?.name %>
+                                                                        </strong>
+
+                                                                        <br>
+
+                                                                        <small>
+                                                                            <%= booking.userId?.email %>
+                                                                        </small>
+
+                                                                    </td>
+
+                                                                    <td>
+
+                                                                        <%= booking.carId?.brand %>
+
+                                                                            <%= booking.carId?.model %>
+
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <%= booking.pickupDate?.toDateString() %>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <%= booking.returnDate?.toDateString() %>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        ₹<%= booking.totalAmount %>
+                                                                    </td>
+
+                                                                    <!-- BOOKING STATUS -->
+                                                                    <td>
+
+                                                                        <% if( booking.bookingStatus==="Approved" ) { %>
+
+                                                                            <span class="badge badge-success">
+                                                                                Approved
+                                                                            </span>
+
+                                                                            <% } else if(
+                                                                                booking.bookingStatus==="Cancelled" ) {
+                                                                                %>
+
+                                                                                <span class="badge badge-danger">
+                                                                                    Rejected
+                                                                                </span>
+
+                                                                                <% } else if(
+                                                                                    booking.bookingStatus==="Completed"
+                                                                                    ) { %>
+
+                                                                                    <span class="badge badge-info">
+                                                                                        Completed
+                                                                                    </span>
+
+                                                                                    <% } else { %>
+
+                                                                                        <span
+                                                                                            class="badge badge-warning">
+                                                                                            Pending
+                                                                                        </span>
+
+                                                                                        <% } %>
+
+                                                                    </td>
+
+                                                                    <!-- PAYMENT -->
+                                                                    <td>
+
+                                                                        <% if( booking.paymentStatus==="Paid" ) { %>
+
+                                                                            <span class="badge badge-success">
+                                                                                Paid
+                                                                            </span>
+
+                                                                            <% } else if(
+                                                                                booking.paymentStatus==="Refunded" ) {
+                                                                                %>
+
+                                                                                <span class="badge badge-danger">
+                                                                                    Refunded
+                                                                                </span>
+
+                                                                                <% } else { %>
+
+                                                                                    <span class="badge badge-warning">
+                                                                                        Pending
+                                                                                    </span>
+
+                                                                                    <% } %>
+
+                                                                    </td>
+
+                                                                    <!-- RETURN -->
+                                                                    <td>
+
+                                                                        <% if( booking.returnStatus==="Returned" ) { %>
+
+                                                                            <span class="badge badge-success">
+                                                                                Returned
+                                                                            </span>
+
+                                                                            <% } else { %>
+
+                                                                                <span class="badge badge-warning">
+                                                                                    Not Returned
+                                                                                </span>
+
+                                                                                <% } %>
+
+                                                                    </td>
+
+                                                                    <!-- ACTIONS -->
+                                                                    <td class="text-center">
+
+                                                                        <% if( booking.bookingStatus==="Pending" ) { %>
+
+                                                                            <a href="/approve-booking/<%= booking._id %>"
+                                                                                class="btn btn-success btn-lg">
+                                                                                Approve
+                                                                            </a>
+
+                                                                            <a href="/reject-booking/<%= booking._id %>"
+                                                                                class="btn btn-danger btn-lg">
+                                                                                Reject
+                                                                            </a>
+
+                                                                        <% } %>
+
+                                                                        <% if(
+                                                                            booking.bookingStatus==="Approved"
+                                                                            &&
+                                                                            booking.returnStatus==="Not Returned"
+                                                                            ) { %>
+
+                                                                            <a href="/return-car/<%= booking._id %>"
+                                                                                class="btn btn-warning btn-lg mt-1">
+                                                                                Mark Returned
+                                                                            </a>
+
+                                                                        <% } %>
+
+                                                                        <% if( booking.paymentStatus==="Pending" && booking.returnStatus==="Not Returned" ) { %>
+
+                                                                            <a href="/return-car/<%= booking._id %>" class="btn btn-info btn-lg mt-1">
+                                                                                Mark Returned
+                                                                            </a>
+
+                                                                            <% } %>
+
+
+                                                                        <% if( booking.paymentStatus==="Success" && booking.returnStatus==="Not Returned" ) { %>
+
+                                                                            <a href="/return-car/<%= booking._id %>" class="btn btn-info btn-lg mt-1">
+                                                                                Mark Returned
+                                                                            </a>
+
+                                                                        <% } %>
+
+                                                                        <% if( booking.paymentStatus==="Failed" && booking.returnStatus==="Not Returned" ) { %>
+
+                                                                        <a href="/return-car/<%= booking._id %>" class="btn btn-primary btn-lg mt-1">
+                                                                            Mark Returned
+                                                                        </a>
+
+                                                                            <% } %>
+
+
+                                                                        <% if( booking.paymentStatus==="Refunded" && booking.returnStatus==="Not Returned" ) { %>
+
+                                                                            <a href="/return-car/<%= booking._id %>" class="btn btn-info btn-lg mt-1">
+                                                                                Mark Returned
+                                                                            </a>
+
+                                                                        <% } %>
+
+                                                                    </td>
+
+                                                                </tr>
+
+                                                            <% }) %>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.container-fluid -->
+                    </div>
+                    <!-- End of Main Content -->
+
+                    <!-- Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Your Website 2020</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+
+                </div>
+                <!-- End of Content Wrapper -->
+
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+
+
+        <%- include('../layouts/footer.ejs') %>

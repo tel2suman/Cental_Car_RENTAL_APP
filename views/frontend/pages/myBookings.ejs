@@ -1,0 +1,294 @@
+<%- include('../layouts/header.ejs') %>
+
+    <%- include('../layouts/topbar.ejs') %>
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a href="/" class="navbar-brand p-0">
+                        <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto py-0">
+                            <a href="/dashboard" class="nav-item nav-link">Home</a>
+                            <a href="/about" class="nav-item nav-link">About</a>
+                            <a href="/available-cars" class="nav-item nav-link">Vehicle</a>
+                            <a href="/my-bookings" class="nav-item nav-link active">My Bookings</a>
+                            <a href="/contact" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="dropdown text-end"> <a href="#"
+                                class="d-block link-body-emphasis text-decoration-none dropdown-toggle badge-pill"
+                                data-bs-toggle="dropdown" aria-expanded="false"> <img src="<%= user?.profileImage %>"
+                                    alt="mdo" width="32" height="32" class="rounded-circle mr-3"> <strong class="mx-1">
+                                    <%= user?.name %>
+                                </strong></a>
+                            <ul class="dropdown-menu w-100 text-small">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/cancelled-bookings">Cancelled Bookings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb mb-5">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">All Bookings</h4>
+                <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active text-primary">Booking</li>
+                </ol>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <div class="container-fluid">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                        <thead class="thead-light">
+
+                            <tr>
+                                <th>SL No.</th>
+                                <th>Car</th>
+                                <th>Image</th>
+                                <th>Pickup Date</th>
+                                <th>Return Date</th>
+                                <th>Total Days</th>
+                                <th>Total Amount</th>
+                                <th>Booking Status</th>
+                                <th>Payment Status</th>
+                                <th>Payment ID</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <% if(bookings.length> 0) { %>
+
+                                <% bookings.forEach((booking, index)=> { %>
+
+                                    <tr>
+
+                                        <!-- SERIAL -->
+                                        <td>
+                                            <%= index + 1 %>
+                                        </td>
+
+                                        <!-- CAR -->
+                                        <td>
+
+                                            <strong>
+                                                <%= booking.carId?.brand %>
+                                            </strong>
+
+                                            <br>
+
+                                            <%= booking.carId?.model %>
+
+                                        </td>
+
+                                        <!-- IMAGE -->
+                                        <td>
+
+                                            <img src="<%= booking.carId?.image %>" width="120" height="80"
+                                                style="object-fit: cover;" class="rounded">
+
+                                        </td>
+
+                                        <!-- PICKUP -->
+                                        <td>
+                                            <%= booking.pickupDate.toDateString() %>
+                                        </td>
+
+                                        <!-- RETURN -->
+                                        <td>
+                                            <%= booking.returnDate.toDateString() %>
+                                        </td>
+
+                                        <!-- TOTAL DAYS -->
+                                        <td>
+                                            <%= booking.totalDays %>
+                                        </td>
+
+                                        <!-- AMOUNT -->
+                                        <td>
+
+                                            <strong class="text-success">
+
+                                                ₹<%= booking.totalAmount %>
+
+                                            </strong>
+
+                                        </td>
+
+                                        <!-- BOOKING STATUS -->
+                                        <td>
+
+                                            <% if( booking.bookingStatus !=="Cancelled" ) { %>
+
+                                                <a href="/cancel-booking/<%= booking._id %>" class="btn btn-primary btn-lg"
+                                                    onclick="
+                                                                                            return confirm(
+                                                                                                'Are you sure you want to cancel this booking?'
+                                                                                            )
+                                                                                        ">
+                                                    Cancel Booking
+                                                </a>
+
+                                                <% } else if(booking.bookingStatus==="Cancelled" ) { %>
+
+                                                    <span class="badge bg-danger rounded-pill text-white">
+                                                        Cancelled
+                                                    </span>
+
+                                                    <% } %>
+
+                                        </td>
+
+                                        <td>
+
+                                            <% if( booking.bookingStatus==="Confirmed" ) { %>
+
+                                                <span class="badge bg-success rounded-pill text-white">
+
+                                                    Confirmed
+
+                                                </span>
+
+                                                <% } else if( booking.bookingStatus==="Pending" ) { %>
+
+                                                    <span class="badge bg-warning rounded-pill text-white">
+
+                                                        Pending
+
+                                                    </span>
+
+                                                    <% } else if( booking.bookingStatus==="Cancelled" ) { %>
+
+                                                        <span class="badge bg-danger rounded-pill text-white">
+
+                                                            Cancelled
+
+                                                        </span>
+
+                                                        <% } else { %>
+
+                                                            <span class="badge bg-success rounded-pill text-white">
+
+                                                                Completed
+
+                                                            </span>
+
+                                                            <% } %>
+
+                                        </td>
+
+                                        <!-- PAYMENT STATUS -->
+                                        <td>
+
+                                            <% if( booking.paymentStatus==="Paid" ) { %>
+
+                                                <span class="badge bg-success rounded-pill text-white">
+
+                                                    Paid
+
+                                                </span>
+
+                                                <% } else if( booking.paymentStatus==="Pending" ) { %>
+
+                                                    <span class="badge bg-warning rounded-pill text-white">
+
+                                                        Pending
+
+                                                    </span>
+
+                                                    <% } else { %>
+
+                                                        <span class="badge bg-info rounded-pill text-white">
+
+                                                            Refunded
+
+                                                        </span>
+
+                                                        <% } %>
+
+                                        </td>
+
+                                        <!-- PAYMENT ID -->
+                                        <td>
+
+                                            <% if(booking.paymentId) { %>
+
+                                                <span class="text-success">
+
+                                                    <%= booking.paymentId %>
+
+                                                </span>
+
+                                                <% } else { %>
+
+                                                    <span class="text-info">
+
+                                                        N/A
+
+                                                    </span>
+
+                                                    <% } %>
+
+                                        </td>
+
+                                    </tr>
+
+                                    <% }) %>
+
+                                        <% } else { %>
+
+                                            <tr>
+
+                                                <td colspan="11" class="text-center text-danger">
+
+                                                    No bookings found
+
+                                                </td>
+
+                                            </tr>
+
+                                            <% } %>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+
+        <%- include('../layouts/footer.ejs') %>

@@ -1,0 +1,162 @@
+<%- include('../layouts/header.ejs') %>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <%- include('../layouts/sidebar.ejs') %>
+            <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
+
+                    <!-- Topbar -->
+                    <%- include('../layouts/topbar.ejs') %>
+                        <!-- End of Topbar -->
+
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
+
+                            <!-- Page Heading -->
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1 class="h3 mb-0 text-gray-800">Edit Profile</h1>
+                            </div>
+
+                            <!-- Content Row -->
+
+                            <!-- Content Row -->
+                            <div class="row">
+
+                                <div class="col-lg-12 mb-4">
+
+                                    <!-- Illustrations -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Edit Profile</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <%- include('../layouts/flash.ejs') %>
+
+                                            <form method="post" action="/admin/update-profile" enctype="multipart/form-data">
+
+                                                <!-- CURRENT IMAGE -->
+
+                                                <div class="form-group mb-3">
+
+                                                    <label>Current Image</label>
+
+                                                    <br>
+
+                                                    <img src="<%= data.profileImage %>" width="auto" class="rounded shadow-lg img-fluid">
+
+                                                </div>
+
+                                                <!-- PROFILE IMAGE -->
+
+                                                <div class="form-group mb-3">
+
+                                                    <label>
+                                                        Profile Image
+                                                    </label>
+
+                                                    <input type="file" name="profileImage" class="rounded shadow-lg img-fluid">
+
+                                                </div>
+
+                                                <!-- NAME -->
+                                                <div class="form-group mb-3">
+                                                    <label>Full Name</label>
+
+                                                    <input type="text" name="name" class="form-control" value="<%= data.name %>" required>
+                                                </div>
+
+                                                <!-- NAME -->
+                                                <div class="form-group mb-3">
+                                                    <label>Email</label>
+
+                                                    <input type="email" name="email" class="form-control" value="<%= data.email %>" required>
+                                                </div>
+
+                                                <!-- PHONE -->
+                                                <div class="form-group mb-3">
+                                                    <label>Phone</label>
+
+                                                    <input type="text" name="phone" class="form-control" value="<%= data.phone %>" required>
+                                                </div>
+
+                                                <!-- DRIVING LICENSE -->
+                                                <div class="form-group mb-3">
+                                                    <label>Driving License</label>
+
+                                                    <input type="text" name="drivingLicense" class="form-control" value="<%= data.drivingLicense %>" required>
+                                                </div>
+
+                                                <!-- ADDRESS -->
+                                                <div class="form-group mb-3">
+                                                    <label>Address</label>
+
+                                                    <textarea name="address" class="form-control" rows="3" required><%= data.address %></textarea>
+                                                </div>
+
+                                                <!-- PASSWORD FIELD -->
+
+                                                <div class="form-group mb-3">
+
+                                                    <label>New Password</label>
+
+                                                    <input type="password" name="password" class="form-control" placeholder="Enter new password">
+
+                                                    <small class="text-muted">
+                                                        Leave blank if you do not want to change password
+                                                    </small>
+
+                                                </div>
+
+                                                <!-- BUTTON -->
+                                                <button type="submit" class="btn btn-primary btn-lg">
+                                                    Update Profile
+                                                </button>
+
+                                                <a href="/admin/profile" class="btn btn-secondary btn-lg">
+                                                    Cancel
+                                                </a>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.container-fluid -->
+                </div>
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2020</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
+
+            </div>
+            <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+
+<%- include('../layouts/footer.ejs') %>

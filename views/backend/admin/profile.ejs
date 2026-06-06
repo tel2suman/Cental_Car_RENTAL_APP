@@ -1,0 +1,161 @@
+<%- include('../layouts/header.ejs') %>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <%- include('../layouts/sidebar.ejs') %>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <%- include('../layouts/topbar.ejs') %>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Profile</h1>
+                    </div>
+
+                    <!-- Content Row -->
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-lg-12 mb-4">
+
+                            <!-- Illustrations -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">User Profile</h6>
+                                </div>
+                                <div class="card-body">
+                                    <%- include('../layouts/flash.ejs') %>
+
+                                        <div class="text-center mb-4">
+
+                                            <% if(data.profileImage) { %>
+
+                                                <img src="<%= data?.profileImage %>" width="150" height="150" class="rounded-circle shadow-lg img-fluid" style="object-fit: cover;">
+
+                                                <% } else { %>
+
+                                                    <img src="https://via.placeholder.com/150" width="150" height="150" class="rounded-circle shadow-lg img-fluid" style="object-fit: cover;">
+
+                                                <% } %>
+
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <strong>Full Name</strong>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <%= data.name %>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <strong>Email</strong>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <%= data.email %>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <strong>Phone</strong>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <%= data.phone %>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <strong>Driving License</strong>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <%= data.drivingLicense %>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <strong>Address</strong>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <%= data.address %>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <strong>Role</strong>
+                                            </div>
+
+                                            <div class="col-md-8">
+                                                <%= data.role %>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-auto col-12">
+                                                <a href="/admin/dashboard" class="btn btn-primary btn-lg">
+                                                    Back
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-auto col-12">
+                                                <a href="/admin/edit-profile" class="btn btn-light btn-lg">
+                                                    Edit Profile
+                                                </a>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+
+<%- include('../layouts/footer.ejs') %>

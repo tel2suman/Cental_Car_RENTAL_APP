@@ -1,0 +1,136 @@
+<%- include('../layouts/header.ejs') %>
+
+    <%- include('../layouts/topbar.ejs') %>
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a href="/" class="navbar-brand p-0">
+                        <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto py-0">
+                            <a href="/dashboard" class="nav-item nav-link">Home</a>
+                            <a href="/about" class="nav-item nav-link">About</a>
+                            <a href="/available-cars" class="nav-item nav-link active">Vehicle</a>
+                            <a href="/my-bookings" class="nav-item nav-link">My Bookings</a>
+                            <a href="/contact" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="dropdown text-end"> <a href="#"
+                                class="d-block link-body-emphasis text-decoration-none dropdown-toggle badge-pill"
+                                data-bs-toggle="dropdown" aria-expanded="false"> <img src="<%= user?.profileImage %>" alt="mdo"
+                                    width="32" height="32" class="rounded-circle mr-3"> <strong class="mx-1">
+                                    <%= user?.name %>
+                                </strong></a>
+                            <ul class="dropdown-menu w-100 text-small">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/cancelled-bookings">Cancelled Bookings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb mb-5">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Availabe Vehicles</h4>
+                <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active text-primary">Vehicles</li>
+                </ol>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Car categories Start -->
+        <div class="container-fluid categories py-5">
+            <div class="container">
+                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+                    <h1 class="display-5 text-capitalize mb-3">Our <span class="text-primary">Vehicles</span></h1>
+                    <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores
+                        commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam
+                        quia distinctio,
+                    </p>
+                </div>
+                <div class="col-lg-6 mx-auto">
+                    <form class="position-relative my-3" method="get" action="/search-cars">
+                        <input type="text" class="form-control rounded-pill w-100 py-3 ps-4 pe-5" name="keyword"
+                            placeholder="Search by brand, model, type, location...">
+                        <button type="submit"
+                            class="btn btn-secondary rounded-pill position-absolute top-0 end-0 py-2 mt-2 me-2">Search Cars</button>
+                    </form>
+                </div>
+                <div class="categories-carousel owl-carousel wow fadeInUp" data-wow-delay="0.1s">
+                    <% if(cars.length> 0) { %>
+                        <% cars.forEach(car=> { %>
+                    <div class="categories-item p-4">
+                        <div class="categories-item-inner">
+                            <div class="categories-img rounded-top">
+                                <img src="<%= car.image %>" class="img-fluid w-100 rounded-top" style="height: 210px; object-fit: cover;" alt="">
+                            </div>
+                            <div class="categories-content rounded-bottom p-4">
+                                <h4><%= car.brand %> <%= car.model %></h4>
+                                <div class="mb-4">
+                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">₹<%= car.pricePerDay %></h4>
+                                </div>
+                                <div class="row gy-2 gx-0 text-center mb-4">
+                                    <div class="col-4 border-end border-white">
+                                        <i class="fa fa-users text-dark"></i> <span class="text-body ms-1"><%= car.type %></span>
+                                    </div>
+                                    <div class="col-4 border-end border-white">
+                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1"><%= car.transmission %></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1"><%= car.fuelType %></span>
+                                    </div>
+                                    <div class="col-4 border-end border-white">
+                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1"><%= car.location %></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-road text-dark"></i> <span class="text-body ms-1"><%= car.seatingCapacity %></span>
+                                    </div>
+                                    <div class="col-4">
+                                        <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">
+                                            <%= car.registrationYear %>
+                                        </span>
+                                    </div>
+                                </div>
+                                <a href="/book-car/<%= car._id %>" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+
+                        <% } else { %>
+
+                            <div class="col-md-12">
+
+                                <div class="alert alert-warning">
+                                    No available cars found
+                                </div>
+
+                            </div>
+
+                        <% } %>
+                </div>
+            </div>
+        </div>
+        <!-- Car categories End -->
+
+
+    <%- include('../layouts/footer.ejs') %>

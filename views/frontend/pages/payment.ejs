@@ -1,0 +1,496 @@
+<%- include('../layouts/header.ejs') %>
+
+    <%- include('../layouts/topbar.ejs') %>
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <a href="/" class="navbar-brand p-0">
+                        <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto py-0">
+                        <a href="/dashboard" class="nav-item nav-link">Home</a>
+                        <a href="/about" class="nav-item nav-link">About</a>
+                        <a href="/available-cars" class="nav-item nav-link">Vehicle</a>
+                        <a href="/my-bookings" class="nav-item nav-link active">My Bookings</a>
+                        <a href="/contact" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="dropdown text-end"> <a href="#"
+                                class="d-block link-body-emphasis text-decoration-none dropdown-toggle badge-pill"
+                                data-bs-toggle="dropdown" aria-expanded="false"> <img src="<%= user?.profileImage %>"
+                                    alt="mdo" width="32" height="32" class="rounded-circle mr-3"> <strong class="mx-1">
+                                    <%= user?.name %>
+                                </strong></a>
+                            <ul class="dropdown-menu w-100 text-small">
+                                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/cancelled-bookings">Cancelled Bookings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb mb-5">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">Payment</h4>
+                <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active text-primary">Payment</li>
+                </ol>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light py-5">
+
+            <div class="row justify-content-center w-100">
+
+                <div class="col-xl-9 col-lg-10">
+
+                    <div class="card border-0 shadow-lg overflow-hidden rounded-4">
+
+                        <div class="row g-0">
+
+                            <!-- LEFT SIDE -->
+                            <div class="col-lg-6 bg-dark text-white position-relative">
+
+                                <img src="<%= car.image %>" class="w-100 h-100" style="object-fit: cover; min-height: 650px;">
+
+                                <div class="position-absolute w-100 h-100 top-0 start-0" style="background: rgba(0,0,0,0.55);">
+                                </div>
+
+                                <div class="position-absolute top-50 start-50 translate-middle text-center px-4 w-100">
+
+                                    <span class="badge bg-primary px-5 py-2 mb-3 rounded-pill fs-5">
+
+                                        Premium Rental
+
+                                    </span>
+
+                                    <h1 class="fw-bold mb-3 text-white">
+
+                                        <%= car.brand %>
+                                            <%= car.model %>
+
+                                    </h1>
+
+                                    <p class="text-light mb-4 fs-5">
+
+                                        Experience premium comfort and smooth driving
+                                        with secure and hassle-free booking.
+
+                                    </p>
+
+                                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+                                        <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+
+                                            <i class="fa fa-car me-2"></i>
+                                            <%= car.type %>
+
+                                        </span>
+
+                                        <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+
+                                            <i class="fa fa-cog me-2"></i>
+                                            <%= car.transmission %>
+
+                                        </span>
+
+                                        <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+
+                                            <i class="fa fa-bolt me-2"></i>
+                                            <%= car.fuelType %>
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- RIGHT SIDE -->
+                            <div class="col-lg-6 bg-white">
+
+                                <div class="p-5">
+
+                                    <!-- HEADER -->
+                                    <div class="mb-5">
+
+                                        <h2 class="fw-bold text-dark mb-2">
+
+                                            Complete Payment
+
+                                        </h2>
+
+                                        <p class="text-muted mb-0">
+
+                                            Secure checkout powered by Razorpay
+
+                                        </p>
+
+                                    </div>
+
+                                    <!-- BOOKING DETAILS -->
+                                    <div class="card border-0 bg-light rounded-4 mb-4">
+
+                                        <div class="card-body p-4">
+
+                                            <div class="d-flex justify-content-between mb-4">
+
+                                                <div>
+
+                                                    <small class="text-muted d-block">
+
+                                                        Pickup Date
+
+                                                    </small>
+
+                                                    <strong class="text-dark">
+
+                                                        <%= booking.pickupDate.toDateString() %>
+
+                                                    </strong>
+
+                                                </div>
+
+                                                <div class="text-end">
+
+                                                    <small class="text-muted d-block">
+
+                                                        Return Date
+
+                                                    </small>
+
+                                                    <strong class="text-dark">
+
+                                                        <%= booking.returnDate.toDateString() %>
+
+                                                    </strong>
+
+                                                </div>
+
+                                            </div>
+
+                                            <hr>
+
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                                <span class="text-muted">
+
+                                                    Duration
+
+                                                </span>
+
+                                                <strong>
+
+                                                    <%= booking.totalDays %> Days
+
+                                                </strong>
+
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                                <span class="text-muted">
+
+                                                    Price Per Day
+
+                                                </span>
+
+                                                <strong>
+
+                                                    ₹<%= car.pricePerDay %>
+
+                                                </strong>
+
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-center">
+
+                                                <span class="fw-bold fs-5 text-dark">
+
+                                                    Total Amount
+
+                                                </span>
+
+                                                <span class="fw-bold fs-4 text-success">
+
+                                                    ₹<%= booking.totalAmount %>
+
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- PAYMENT METHODS -->
+                                    <div class="mb-4">
+
+                                        <small class="text-muted d-block mb-3">
+
+                                            Accepted Payment Methods
+
+                                        </small>
+
+                                        <div class="d-flex gap-3 flex-wrap">
+
+                                            <div class="border rounded-3 px-3 py-2 bg-light">
+
+                                                <i class="fa fa-credit-card text-primary me-2"></i>
+
+                                                Cards
+
+                                            </div>
+
+                                            <div class="border rounded-3 px-3 py-2 bg-light">
+
+                                                <i class="fa fa-university text-success me-2"></i>
+
+                                                Net Banking
+
+                                            </div>
+
+                                            <div class="border rounded-3 px-3 py-2 bg-light">
+
+                                                <i class="fa fa-mobile text-danger me-2"></i>
+
+                                                UPI
+
+                                            </div>
+
+                                            <div class="border rounded-3 px-3 py-2 bg-light">
+
+                                                <i class="fa fa-wallet text-warning me-2"></i>
+
+                                                Wallets
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- PAY BUTTON -->
+                                    <button id="rzp-button"
+                                        class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm py-3 fw-bold">
+
+                                        <i class="fa fa-lock me-2"></i>
+
+                                        Pay ₹<%= booking.totalAmount %>
+
+                                    </button>
+
+                                    <!-- FOOTER -->
+                                    <div class="text-center mt-4">
+
+                                        <small class="text-muted">
+
+                                            <i class="fa fa-shield me-1 text-success"></i>
+
+                                            100% Secure Encrypted Payment
+
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+        <script>
+
+            const options = {
+
+                key:
+                    "<%= razorpayKey %>",
+
+                amount:
+                    "<%= order.amount %>",
+
+                currency:
+                    "INR",
+
+                name:
+                    "Car Rental System",
+
+                description:
+                    "Car Booking Payment",
+
+                image:
+                    "<%= car.image %>",
+
+                order_id:
+                    "<%= order.id %>",
+
+                handler:
+                    async function (response) {
+
+                        try {
+
+                            // VERIFY PAYMENT
+                            const verifyPayment =
+                                await fetch(
+                                    "/verify-payment",
+                                    {
+
+                                        method:
+                                            "POST",
+
+                                        headers: {
+
+                                            "Content-Type":
+                                                "application/json"
+                                        },
+
+                                        body:
+                                            JSON.stringify({
+
+                                                razorpay_order_id:
+                                                    response.razorpay_order_id,
+
+                                                razorpay_payment_id:
+                                                    response.razorpay_payment_id,
+
+                                                razorpay_signature:
+                                                    response.razorpay_signature,
+
+                                                bookingId:
+                                                    "<%= booking._id %>"
+                                            })
+                                    }
+                                );
+
+                            const data =
+                                await verifyPayment.json();
+
+                            // SUCCESS
+                            if (data.success) {
+
+                                window.location.href =
+                                    "/my-bookings";
+
+                            } else {
+
+                                alert(
+                                    "Payment verification failed"
+                                );
+                            }
+
+                        } catch (error) {
+
+                            console.log(error);
+
+                            alert(
+                                "Something went wrong"
+                            );
+                        }
+                    },
+
+                prefill: {
+
+                    name:
+                        "<%= user.name %>",
+
+                    email:
+                        "<%= user.email %>",
+
+                    contact:
+                        "<%= user.phone %>"
+                },
+
+                notes: {
+
+                    bookingId:
+                        "<%= booking._id %>"
+                },
+
+                theme: {
+
+                    color:
+                        "#4e73df"
+                },
+
+                modal: {
+
+                    ondismiss:
+                        function () {
+
+                            alert(
+                                "Payment cancelled"
+                            );
+                        }
+                }
+            };
+
+            // INITIALIZE RAZORPAY
+            const rzp =
+                new Razorpay(
+                    options
+                );
+
+            // PAYMENT FAILED
+            rzp.on(
+                "payment.failed",
+                function (
+                    response
+                ) {
+
+                    alert(
+                        response.error.description
+                    );
+
+                    console.log(
+                        response.error
+                    );
+                }
+            );
+
+            // OPEN PAYMENT
+            document
+                .getElementById(
+                    "rzp-button"
+                )
+                .onclick =
+                function (e) {
+
+                    rzp.open();
+
+                    e.preventDefault();
+                };
+
+        </script>
+
+        <%- include('../layouts/footer.ejs') %>
