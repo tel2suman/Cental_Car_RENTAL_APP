@@ -26,8 +26,6 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider">
 
-                <!-- Divider -->
-                <hr class="sidebar-divider">
 
                 <!-- Heading -->
                 <div class="sidebar-heading">
@@ -236,7 +234,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                        <%= user.name %>
+                                        <%= user?.name %>
                                     </span>
 
                                     <img class="img-profile rounded-circle" src="<%= user?.profileImage %>">
@@ -266,7 +264,7 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Welcome, <%= user.name %></h1>
+                            <h1 class="h3 mb-0 text-gray-800">Welcome, <%= user?.name %></h1>
                         </div>
 
                         <!-- Content Row -->
@@ -351,8 +349,7 @@
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="chart-area">
-                                        <canvas id="earningsChart" height="100">
-                                        </canvas>
+                                        <canvas id="earningsBarChart" height="100"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +361,7 @@
                                     <!-- Card Body -->
                                     <div class="card-body">
                                         <div class="chart-pie pt-4 pb-2">
-                                            <canvas id="availabilityChart">
+                                            <canvas id="availabilityChart" height="100">
                                             </canvas>
                                         </div>
                                     </div>
@@ -424,48 +421,105 @@
 
         <script>
 
-            const ctx =
-                document.getElementById(
-                    "earningsChart"
-                ).getContext("2d");
+            // MONTHS
+                const months =
+        '<% - JSON.stringify(months) %>';
 
-            new Chart(ctx, {
+                // EARNINGS DATA
+                const earnings =
+        '<% - JSON.stringify(earningsChart) %>';
 
-                type: "bar",
+                // CHART
+                const ctx =
+                    document
+                        .getElementById(
+                            "earningsBarChart"
+                        )
+                        .getContext("2d");
 
-                data: {
+                new Chart(ctx, {
 
-                    labels:
-                                    "<% - JSON.stringify(months) %>",
+                    type:
+                        "bar",
 
-                    datasets: [
+                    data: {
 
-                        {
+                        labels:
+                            months,
 
-                            label:
-                                "Total Earnings (₹)",
+                        datasets: [
 
-                            data:
-                                            "<% - JSON.stringify(earningsChart) %>",
+                            {
 
-                            borderWidth: 1
-                        }
-                    ]
-                },
+                                label:
+                                    "Total Earnings (₹)",
 
-                options: {
+                                data:
+                                    earnings,
 
-                    responsive: true,
+                                backgroundColor:
+                                    "rgba(234, 0, 30, 0.8)",
 
-                    scales: {
+                                borderColor:
+                                    "#1f2e4e",
 
-                        y: {
+                                borderWidth:
+                                    2,
 
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+                                borderRadius:
+                                    10,
+
+                                hoverBackgroundColor:
+                                    "#1f2e4e",
+                            },
+                        ],
+                    },
+
+                    options: {
+
+                        responsive:
+                            true,
+
+                        maintainAspectRatio:
+                            false,
+
+                        plugins: {
+
+                            legend: {
+
+                                display:
+                                    true,
+
+                                labels: {
+
+                                    font: {
+
+                                        size:
+                                            14,
+                                    },
+                                },
+                            },
+                        },
+
+                        scales: {
+
+                            y: {
+
+                                beginAtZero:
+                                    true,
+
+                                ticks: {
+
+                                    callback:
+                                        function (value) {
+
+                                            return "₹" + value;
+                                        },
+                                },
+                            },
+                        },
+                    },
+                });
 
              // ================= PIE CHART =================
 

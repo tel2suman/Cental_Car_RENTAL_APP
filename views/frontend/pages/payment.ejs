@@ -332,6 +332,11 @@
 
         <script>
 
+            // PAY BUTTON
+            const payButton =
+                document.getElementById("rzp-button");
+
+            // RAZORPAY OPTIONS
             const options = {
 
                 key:
@@ -347,7 +352,7 @@
                     "Car Rental System",
 
                 description:
-                    "Car Booking Payment",
+                    "Secure Car Booking Payment",
 
                 image:
                     "<%= car.image %>",
@@ -355,10 +360,23 @@
                 order_id:
                     "<%= order.id %>",
 
+                // PAYMENT SUCCESS
                 handler:
                     async function (response) {
 
                         try {
+
+                            // LOADING BUTTON
+                            payButton.innerHTML =
+                                `
+                                    <span
+                                        class="spinner-border spinner-border-sm"
+                                    ></span>
+
+                                    Verifying Payment...
+                                `;
+
+                            payButton.disabled = true;
 
                             // VERIFY PAYMENT
                             const verifyPayment =
@@ -399,14 +417,25 @@
                             // SUCCESS
                             if (data.success) {
 
+                                alert(
+                                    "Payment Successful & Booking Confirmed"
+                                );
+
+                                // REDIRECT
                                 window.location.href =
                                     "/my-bookings";
 
                             } else {
 
                                 alert(
+                                    data.message ||
                                     "Payment verification failed"
                                 );
+
+                                payButton.disabled = false;
+
+                                payButton.innerHTML =
+                                    "Pay Now";
                             }
 
                         } catch (error) {
@@ -416,40 +445,52 @@
                             alert(
                                 "Something went wrong"
                             );
+
+                            payButton.disabled = false;
+
+                            payButton.innerHTML =
+                                "Pay Now";
                         }
                     },
 
+                // PREFILL USER DETAILS
                 prefill: {
 
                     name:
-                        "<%= user.name %>",
+                        "<%= user?.name || '' %>",
 
                     email:
-                        "<%= user.email %>",
+                        "<%= user?.email || '' %>",
 
                     contact:
-                        "<%= user.phone %>"
+                        "<%= user?.phone || '' %>"
                 },
 
+                // EXTRA NOTES
                 notes: {
 
                     bookingId:
-                        "<%= booking._id %>"
+                        "<%= booking._id %>",
+
+                    car:
+                        "<%= car.brand %> <%= car.model %>"
                 },
 
+                // THEME
                 theme: {
 
                     color:
-                        "#4e73df"
+                        "#ea001e"
                 },
 
+                // MODAL SETTINGS
                 modal: {
 
                     ondismiss:
                         function () {
 
                             alert(
-                                "Payment cancelled"
+                                "Payment popup closed"
                             );
                         }
                 }
@@ -457,33 +498,29 @@
 
             // INITIALIZE RAZORPAY
             const rzp =
-                new Razorpay(
-                    options
-                );
+                new Razorpay(options);
 
             // PAYMENT FAILED
             rzp.on(
                 "payment.failed",
-                function (
-                    response
-                ) {
+
+                function (response) {
+
+                    console.log(
+                        response.error
+                    );
 
                     alert(
                         response.error.description
                     );
 
-                    console.log(
-                        response.error
-                    );
+                    window.location.href =
+                        "/my-bookings";
                 }
             );
 
-            // OPEN PAYMENT
-            document
-                .getElementById(
-                    "rzp-button"
-                )
-                .onclick =
+            // OPEN CHECKOUT
+            payButton.onclick =
                 function (e) {
 
                     rzp.open();

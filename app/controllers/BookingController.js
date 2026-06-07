@@ -213,7 +213,7 @@ class BookingController {
 
       // UPDATE BOOKING
       await Booking.findByIdAndUpdate(bookingId, {
-        bookingStatus: "Approved",
+        bookingStatus: "Completed",
 
         paymentStatus: "Success",
       });
@@ -858,6 +858,16 @@ class BookingController {
       booking.paymentStatus = "Success";
 
       await booking.save();
+
+      // MAKE CAR UNAVAILABLE
+      const car = await Car.findById(booking.carId);
+
+      if (car) {
+
+        car.availability = false;
+
+        await car.save();
+      }
 
       req.flash("success_msg", "Booking approved successfully");
 

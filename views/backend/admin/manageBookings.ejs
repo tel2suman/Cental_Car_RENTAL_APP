@@ -183,7 +183,7 @@
                                                                     <!-- ACTIONS -->
                                                                     <td class="text-center">
 
-                                                                        <% if( booking.bookingStatus==="Pending" ) { %>
+                                                                        <% if( booking.bookingStatus==="Pending" && booking.paymentStatus==="Pending") { %>
 
                                                                             <a href="/approve-booking/<%= booking._id %>"
                                                                                 class="btn btn-success btn-lg">
@@ -197,14 +197,18 @@
 
                                                                         <% } %>
 
-                                                                        <% if( booking.paymentStatus==="Pending" && booking.returnStatus==="Not Returned" ) { %>
+                                                                        <% if( booking.paymentStatus==="Pending" && booking.bookingStatus==="Approved" && booking.returnStatus==="Not Returned" ) { %>
+
+                                                                            <a href="/approve-booking/<%= booking._id %>" class="btn btn-success btn-lg">
+                                                                                Approve
+                                                                            </a>
+
+                                                                            <a href="/reject-booking/<%= booking._id %>" class="btn btn-danger btn-lg mt-1">
+                                                                                Reject
+                                                                            </a>
 
                                                                             <a href="/return-car/<%= booking._id %>" class="btn btn-info btn-lg mt-1">
                                                                                 Mark Returned
-                                                                            </a>
-
-                                                                            <a href="/reject-booking/<%= booking._id %>" class="btn btn-info btn-lg mt-1">
-                                                                                Reject
                                                                             </a>
 
                                                                             <% } %>
@@ -220,9 +224,9 @@
 
                                                                         <% if( booking.paymentStatus==="Failed" && booking.returnStatus==="Not Returned" ) { %>
 
-                                                                        <a href="/return-car/<%= booking._id %>" class="btn btn-primary btn-lg mt-1">
-                                                                            Mark Returned
-                                                                        </a>
+                                                                            <a href="/return-car/<%= booking._id %>" class="btn btn-primary btn-lg mt-1">
+                                                                                Mark Returned
+                                                                            </a>
 
                                                                             <% } %>
 

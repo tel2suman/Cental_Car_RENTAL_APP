@@ -71,7 +71,7 @@ app.use(
 
 app.use(async (req, res, next) => {
 
-  res.locals.user = req?.user?.id || null;
+  res.locals.user = req?.user?.userId || null;
 
   next();
 });

@@ -1,8 +1,8 @@
 
 const User = require("../models/User");
 
-
 class HomeController {
+
   async homePage(req, res) {
     try {
       res.render("frontend/pages/home", {
@@ -17,7 +17,9 @@ class HomeController {
 
     try {
 
-      const user = await User.findById(req?.user?.id);
+      const user = req?.user?.userId
+        ? await User.findById(req?.user?.userId)
+        : null;
 
       return res.render("frontend/pages/about", {
         title: "About Page",
@@ -25,7 +27,7 @@ class HomeController {
       });
     } catch (error) {
       console.log(error);
-       return res.redirect("/");
+      return res.redirect("/");
     }
   }
 
@@ -33,7 +35,9 @@ class HomeController {
 
     try {
 
-      const user = await User.findById(req?.user?.id);
+      const user = req?.user?.userId
+      ? await User.findById(req?.user?.userId)
+      : null;
 
       return res.render("frontend/pages/contact", {
         title: "Contact Page",

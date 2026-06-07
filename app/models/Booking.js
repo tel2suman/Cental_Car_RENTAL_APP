@@ -53,7 +53,8 @@ const BookingSchema = new mongoose.Schema(
     },
 
     paymentId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Payment",
     },
 
     orderId: {

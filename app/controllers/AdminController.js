@@ -212,7 +212,7 @@ class AdminController {
       const earningsData = await Booking.aggregate([
         {
           $match: {
-            paymentStatus: "Paid",
+            paymentStatus: "Success",
           },
         },
 
@@ -267,7 +267,7 @@ class AdminController {
       const totalEarnings = await Booking.aggregate([
         {
           $match: {
-            paymentStatus: "Paid",
+            paymentStatus: "Success",
           },
         },
 
@@ -302,10 +302,59 @@ class AdminController {
 
       const totalBookings = await Booking.countDocuments();
 
+      // ================= PENDING BOOKINGS =================
+
+      const pendingBookings = await Booking.countDocuments({
+        bookingStatus: "Pending",
+      });
+
+      // ================= APPROVED BOOKINGS =================
+
+      const approvedBookings = await Booking.countDocuments({
+        bookingStatus: "Approved",
+      });
+
+      // ================= CANCELLED BOOKINGS =================
+
+      const cancelledBookings = await Booking.countDocuments({
+        bookingStatus: "Cancelled",
+      });
+
+      // ================= TOTAL REVENUE THIS MONTH =================
+
+      const currentMonth = new Date().getMonth() + 1;
+
+      const monthlyRevenue = await Booking.aggregate([
+        {
+          $match: {
+            paymentStatus: "Success",
+
+            $expr: {
+              $eq: [
+                {
+                  $month: "$createdAt",
+                },
+
+                currentMonth,
+              ],
+            },
+          },
+        },
+
+        {
+          $group: {
+            _id: null,
+
+            total: {
+              $sum: "$totalAmount",
+            },
+          },
+        },
+      ]);
+
       // ================= RENDER =================
 
       return res.render("backend/admin/dashboard", {
-
         title: "Admin Dashboard Page",
 
         months,
@@ -313,6 +362,8 @@ class AdminController {
         earningsChart,
 
         totalEarnings: totalEarnings[0]?.total || 0,
+
+        monthlyRevenue: monthlyRevenue[0]?.total || 0,
 
         availableCars,
 
@@ -323,6 +374,12 @@ class AdminController {
         totalUsers,
 
         totalBookings,
+
+        pendingBookings,
+
+        approvedBookings,
+
+        cancelledBookings,
 
         user,
       });
