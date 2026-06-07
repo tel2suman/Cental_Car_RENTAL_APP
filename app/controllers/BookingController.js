@@ -222,114 +222,507 @@ class BookingController {
       const booking = await Booking.findById(bookingId);
 
       // MAKE CAR UNAVAILABLE
-      await Car.findByIdAndUpdate(booking.carId, {
+      const car = await Car.findByIdAndUpdate(booking.carId, {
         availability: false,
+        new: true,
       });
 
-      // ================= SEND EMAIL =================
-
-      // const mailOptions = {
-
-      //   from: process.env.EMAIL_USER,
-
-      //   to: booking.userId?.email,
-
-      //   subject: "Booking Confirmed - Cental",
-
-      //   html: `
-
-      //   <div style="font-family: Arial; padding: 20px;">
-
-      //     <h2 style="color: green;">
-      //       Booking Confirmed
-      //     </h2>
-
-      //     <p>
-      //       Hello
-      //       <strong>
-      //         ${booking.userId?.name}
-      //       </strong>,
-      //     </p>
-
-      //     <p>
-      //       Your car booking has been confirmed successfully.
-      //     </p>
-
-      //     <hr>
-
-      //     <h3>
-      //       Booking Details
-      //     </h3>
-
-      //     <p>
-      //       <strong>
-      //         Car:
-      //       </strong>
-
-      //       ${booking.carId?.brand}
-      //       ${booking.carId?.model}
-      //     </p>
-
-      //     <p>
-      //       <strong>
-      //         Pickup Date:
-      //       </strong>
-
-      //       ${new Date(booking.pickupDate).toDateString()}
-      //     </p>
-
-      //     <p>
-      //       <strong>
-      //         Return Date:
-      //       </strong>
-
-      //       ${new Date(booking.returnDate).toDateString()}
-      //     </p>
-
-      //     <p>
-      //       <strong>
-      //         Total Days:
-      //       </strong>
-
-      //       ${booking.totalDays}
-      //     </p>
-
-      //     <p>
-      //       <strong>
-      //         Total Amount:
-      //       </strong>
-
-      //       ₹${booking.totalAmount}
-      //     </p>
-
-      //     <p>
-      //       <strong>
-      //         Payment Status:
-      //       </strong>
-
-      //       Paid
-      //     </p>
-
-      //     <p>
-      //       <strong>
-      //         Payment ID:
-      //       </strong>
-
-      //       ${razorpay_payment_id}
-      //     </p>
-
-      //     <br>
-
-      //     <p>
-      //       Thank you for choosing our service.
-      //     </p>
-
-      //   </div>
-      // `,
-      // };
+      // FIND USER
+      const user = await User.findById(booking.userId);
 
       // SEND EMAIL
-      //await transporter.sendMail(mailOptions);
+      if (user?.email) {
+
+        await transporter.sendMail({
+
+          from: process.env.EMAIL_USER,
+
+          to: user.email,
+
+          subject: "🚗 Booking Confirmed - Cental Car Rental System",
+
+          html: `
+
+          <!DOCTYPE html>
+
+          <html>
+
+          <head>
+
+            <meta charset="UTF-8">
+
+            <title>
+              Booking Confirmation
+            </title>
+
+            <!-- GOOGLE FONTS -->
+            <link href="
+              https://fonts.googleapis.com/css2?
+              family=Montserrat:wght@400;500;600;700&
+              family=Lato:wght@300;400;700&
+              display=swap
+            "
+            rel="stylesheet">
+
+          </head>
+
+          <body style="
+
+            margin: 0;
+            padding: 0;
+            background: #f4f6fb;
+            font-family: 'Lato', sans-serif;
+          ">
+
+            <table width="100%" cellpadding="0" cellspacing="0">
+
+              <tr>
+
+                <td align="center">
+
+                  <table width="680" cellpadding="0" cellspacing="0" style="
+
+                    background: #ffffff;
+                    margin: 40px auto;
+                    border-radius: 20px;
+                    overflow: hidden;
+                    box-shadow:
+                      0 12px 40px rgba(0,0,0,0.08);
+                  ">
+
+                    <!-- HEADER -->
+
+                    <tr>
+
+                      <td align="center" style="
+
+                        background:
+                          linear-gradient(
+                            135deg,
+                            #1f2e4e,
+                            #ea001e
+                          );
+
+                        padding:
+                          55px 25px;
+                      ">
+
+                        <img
+
+                          src="
+                          https://cdn-icons-png.flaticon.com/512/744/744465.png
+                          "
+
+                          width="90"
+
+                          style="
+                            margin-bottom: 18px;
+                          "
+                        >
+
+                        <h1 style="
+
+                          margin: 0;
+                          color: #ffffff;
+                          font-size: 38px;
+                          font-family: 'Montserrat', sans-serif;
+                          font-weight: 700;
+                          letter-spacing: 1px;
+                        ">
+
+                          Car Rental System
+
+                        </h1>
+
+                        <p style="
+
+                          color: #f5d6da;
+                          margin-top: 14px;
+                          font-size: 17px;
+                          font-family: 'Lato', sans-serif;
+                          line-height: 1.8;
+                        ">
+
+                          Your booking has been successfully confirmed
+
+                        </p>
+
+                      </td>
+
+                    </tr>
+
+                    <!-- BODY -->
+
+                    <tr>
+
+                      <td style="
+
+                        padding: 50px;
+                        color: #333333;
+                      ">
+
+                        <h2 style="
+
+                          margin-top: 0;
+                          font-size: 30px;
+                          font-family: 'Montserrat', sans-serif;
+                          font-weight: 700;
+                          color: #1f2e4e;
+                        ">
+
+                          Hello ${user.name},
+                        </h2>
+
+                        <p style="
+
+                          font-size: 17px;
+                          line-height: 2;
+                          color: #555555;
+                          margin-top: 20px;
+                        ">
+
+                          Thank you for choosing
+                          <strong style="
+
+                            color: #ea001e;
+                          ">
+
+                            Car Rental System
+
+                          </strong>.
+
+                          Your payment has been verified successfully
+                          and your booking is now officially confirmed.
+
+                        </p>
+
+                        <!-- BOOKING DETAILS CARD -->
+
+                        <table width="100%" cellpadding="0" cellspacing="0" style="
+
+                          margin-top: 40px;
+                          border-radius: 16px;
+                          overflow: hidden;
+                          border: 1px solid #e9edf5;
+                        ">
+
+                          <tr>
+
+                            <td colspan="2" style="
+
+                              background: #1f2e4e;
+                              color: #ffffff;
+                              padding: 20px;
+                              font-size: 24px;
+                              font-family: 'Montserrat', sans-serif;
+                              font-weight: 600;
+                            ">
+
+                              Booking Details
+
+                            </td>
+
+                          </tr>
+
+                          <tr>
+
+                            <td style="
+
+                              padding: 18px;
+                              font-weight: 700;
+                              color: #1f2e4e;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              🚘 Car
+
+                            </td>
+
+                            <td style="
+
+                              padding: 18px;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              ${car.brand}
+                              ${car.model}
+
+                            </td>
+
+                          </tr>
+
+                          <tr>
+
+                            <td style="
+
+                              padding: 18px;
+                              font-weight: 700;
+                              color: #1f2e4e;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              📅 Pickup Date
+
+                            </td>
+
+                            <td style="
+
+                              padding: 18px;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              ${new Date(booking.pickupDate).toDateString()}
+
+                            </td>
+
+                          </tr>
+
+                          <tr>
+
+                            <td style="
+
+                              padding: 18px;
+                              font-weight: 700;
+                              color: #1f2e4e;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              📅 Return Date
+
+                            </td>
+
+                            <td style="
+
+                              padding: 18px;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              ${new Date(booking.returnDate).toDateString()}
+
+                            </td>
+
+                          </tr>
+
+                          <tr>
+
+                            <td style="
+
+                              padding: 18px;
+                              font-weight: 700;
+                              color: #1f2e4e;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              ⏳ Duration
+
+                            </td>
+
+                            <td style="
+
+                              padding: 18px;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              ${booking.totalDays}
+                              Days
+
+                            </td>
+
+                          </tr>
+
+                          <tr>
+
+                            <td style="
+
+                              padding: 18px;
+                              font-weight: 700;
+                              color: #1f2e4e;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              💳 Payment ID
+
+                            </td>
+
+                            <td style="
+
+                              padding: 18px;
+                              border-bottom:
+                                1px solid #f2f2f2;
+                            ">
+
+                              ${razorpay_payment_id}
+
+                            </td>
+
+                          </tr>
+
+                          <tr>
+
+                            <td style="
+
+                              padding: 20px;
+                              font-weight: 700;
+                              color: #1f2e4e;
+                            ">
+
+                              💰 Total Amount
+
+                            </td>
+
+                            <td style="
+
+                              padding: 20px;
+                              color: #ea001e;
+                              font-size: 28px;
+                              font-weight: 700;
+                              font-family: 'Montserrat', sans-serif;
+                            ">
+
+                              ₹${booking.totalAmount}
+
+                            </td>
+
+                          </tr>
+
+                        </table>
+
+                        <!-- STATUS -->
+
+                        <div style="
+
+                          margin-top: 40px;
+                          text-align: center;
+                        ">
+
+                          <span style="
+
+                            background: #ea001e;
+                            color: #ffffff;
+                            padding: 15px 34px;
+                            border-radius: 50px;
+                            font-size: 16px;
+                            font-weight: 700;
+                            display: inline-block;
+                            letter-spacing: 0.5px;
+                            font-family: 'Montserrat', sans-serif;
+                            box-shadow:
+                              0 6px 18px rgba(234,0,30,0.25);
+                          ">
+
+                            ✔ Booking Approved
+
+                          </span>
+
+                        </div>
+
+                        <!-- CTA BUTTON -->
+
+                        <div style="
+
+                          text-align: center;
+                          margin-top: 45px;
+                        ">
+
+                          <a
+                            href="
+                            http://localhost:5000/my-bookings
+                            "
+
+                            style="
+
+                              background:
+                                linear-gradient(
+                                  135deg,
+                                  #ea001e,
+                                  #1f2e4e
+                                );
+
+                              color: #ffffff;
+                              text-decoration: none;
+                              padding: 17px 38px;
+                              border-radius: 10px;
+                              font-size: 16px;
+                              font-family: 'Montserrat', sans-serif;
+                              font-weight: 600;
+                              display: inline-block;
+                              box-shadow:
+                                0 6px 20px rgba(31,46,78,0.25);
+                            "
+                          >
+
+                            View My Bookings
+
+                          </a>
+
+                        </div>
+
+                      </td>
+
+                    </tr>
+
+                    <!-- FOOTER -->
+
+                    <tr>
+
+                      <td align="center" style="
+
+                        background: #1f2e4e;
+                        padding: 35px 25px;
+                        color: #d7dbe5;
+                      ">
+
+                        <p style="
+
+                          margin: 0;
+                          font-size: 16px;
+                          font-family: 'Montserrat', sans-serif;
+                          font-weight: 600;
+                        ">
+
+                          © 2026 Car Rental System
+
+                        </p>
+
+                        <p style="
+
+                          margin-top: 12px;
+                          line-height: 1.9;
+                          font-size: 14px;
+                          color: #b8c1d4;
+                        ">
+
+                          Drive Safe • Travel Smart • Rent Easy
+
+                        </p>
+
+                      </td>
+
+                    </tr>
+
+                  </table>
+
+                </td>
+
+              </tr>
+
+            </table>
+
+          </body>
+
+          </html>
+        `,
+      });
+    }
 
       return res.json({
         success: true,

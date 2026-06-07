@@ -58,236 +58,347 @@
         </div>
         <!-- Header End -->
 
-        <div class="container-fluid">
+        <div class="container-fluid py-5">
 
-        <div class="card shadow">
+            <!-- BOOKING CARD -->
 
-            <div class="card-body">
+            <div class="card booking-card">
 
-                <div class="table-responsive">
+                <!-- HEADER -->
 
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <div class="booking-header d-flex justify-content-between align-items-center flex-wrap">
 
-                        <thead class="thead-light">
+                    <h3 class="text-white">
 
-                            <tr>
-                                <th>SL No.</th>
-                                <th>Car</th>
-                                <th>Image</th>
-                                <th>Pickup Date</th>
-                                <th>Return Date</th>
-                                <th>Total Days</th>
-                                <th>Total Amount</th>
-                                <th>Booking Status</th>
-                                <th>Payment Status</th>
-                                <th>Payment ID</th>
-                                <th>Action</th>
-                            </tr>
+                        Booking History
 
-                        </thead>
+                    </h3>
 
-                        <tbody>
+                    <span class="badge bg-light text-dark px-4 py-2 rounded-pill fw-semibold">
 
-                            <% if(bookings.length> 0) { %>
+                        Total:
+                        <%= bookings.length %>
 
-                                <% bookings.forEach((booking, index)=> { %>
+                    </span>
 
-                                    <tr>
+                </div>
 
-                                        <!-- SERIAL -->
-                                        <td>
-                                            <%= index + 1 %>
-                                        </td>
+                <!-- BODY -->
 
-                                        <!-- CAR -->
-                                        <td>
+                <div class="card-body p-0">
 
-                                            <strong>
-                                                <%= booking.carId?.brand %>
-                                            </strong>
+                    <div class="table-responsive">
 
-                                            <br>
+                        <table class="table align-middle mb-0">
 
-                                            <%= booking.carId?.model %>
+                            <thead>
 
-                                        </td>
+                                <tr>
 
-                                        <!-- IMAGE -->
-                                        <td>
+                                    <th>#</th>
 
-                                            <img src="<%= booking.carId?.image %>" width="120" height="80"
-                                                style="object-fit: cover;" class="rounded">
+                                    <th>Car</th>
 
-                                        </td>
+                                    <th>Image</th>
 
-                                        <!-- PICKUP -->
-                                        <td>
-                                            <%= booking.pickupDate.toDateString() %>
-                                        </td>
+                                    <th>Pickup</th>
 
-                                        <!-- RETURN -->
-                                        <td>
-                                            <%= booking.returnDate.toDateString() %>
-                                        </td>
+                                    <th>Return</th>
 
-                                        <!-- TOTAL DAYS -->
-                                        <td>
-                                            <%= booking.totalDays %>
-                                        </td>
+                                    <th>Duration</th>
 
-                                        <!-- AMOUNT -->
-                                        <td>
+                                    <th>Amount</th>
 
-                                            <strong class="text-success">
+                                    <th>Booking</th>
 
-                                                ₹<%= booking.totalAmount %>
+                                    <th>Payment</th>
 
-                                            </strong>
+                                    <th>Payment ID</th>
 
-                                        </td>
+                                    <th>Action</th>
 
-                                        <!-- BOOKING STATUS -->
-                                        <td>
+                                </tr>
 
-                                            <% if( booking.bookingStatus !=="Cancelled" ) { %>
+                            </thead>
 
-                                                <a href="/cancel-booking/<%= booking._id %>" class="btn btn-primary btn-lg"
-                                                    onclick="
-                                                                                            return confirm(
-                                                                                                'Are you sure you want to cancel this booking?'
-                                                                                            )
-                                                                                        ">
-                                                    Cancel Booking
-                                                </a>
+                            <tbody>
 
-                                                <% } else if(booking.bookingStatus==="Cancelled" ) { %>
+                                <% if(bookings.length> 0) { %>
 
-                                                    <span class="badge bg-danger rounded-pill text-white">
-                                                        Cancelled
-                                                    </span>
+                                    <% bookings.forEach((booking, index)=> { %>
 
-                                                    <% } %>
+                                        <tr>
 
-                                        </td>
+                                            <!-- SL -->
 
-                                        <td>
+                                            <td class="fw-bold text-muted">
 
-                                            <% if( booking.bookingStatus==="Confirmed" ) { %>
+                                                #<%= index + 1 %>
 
-                                                <span class="badge bg-success rounded-pill text-white">
+                                            </td>
 
-                                                    Confirmed
+                                            <!-- CAR -->
+
+                                            <td>
+
+                                                <div class="car-name">
+
+                                                    <%= booking.carId?.brand %>
+
+                                                </div>
+
+                                                <small class="text-muted">
+
+                                                    <%= booking.carId?.model %>
+
+                                                </small>
+
+                                            </td>
+
+                                            <!-- IMAGE -->
+
+                                            <td>
+
+                                                <img src="<%= booking.carId?.image %>" class="booking-img">
+
+                                            </td>
+
+                                            <!-- PICKUP -->
+
+                                            <td>
+
+                                                <span class="badge bg-light text-dark custom-badge">
+
+                                                    <%= booking.pickupDate.toDateString() %>
 
                                                 </span>
 
-                                                <% } else if( booking.bookingStatus==="Pending" ) { %>
+                                            </td>
 
-                                                    <span class="badge bg-warning rounded-pill text-white">
+                                            <!-- RETURN -->
 
-                                                        Pending
+                                            <td>
+
+                                                <span class="badge bg-light text-dark custom-badge">
+
+                                                    <%= booking.returnDate.toDateString() %>
+
+                                                </span>
+
+                                            </td>
+
+                                            <!-- DAYS -->
+
+                                            <td>
+
+                                                <span class="badge bg-primary custom-badge">
+
+                                                    <%= booking.totalDays %> Days
+
+                                                </span>
+
+                                            </td>
+
+                                            <!-- AMOUNT -->
+
+                                            <td>
+
+                                                <span class="amount">
+
+                                                    ₹<%= booking.totalAmount %>
+
+                                                </span>
+
+                                            </td>
+
+                                            <!-- BOOKING STATUS -->
+
+                                            <td>
+
+                                                <% if(booking.bookingStatus==="Approved" ) { %>
+
+                                                    <span class="badge bg-success custom-badge">
+
+                                                        Approved
 
                                                     </span>
 
-                                                    <% } else if( booking.bookingStatus==="Cancelled" ) { %>
+                                                    <% } else if( booking.bookingStatus==="Pending" ) { %>
 
-                                                        <span class="badge bg-danger rounded-pill text-white">
+                                                        <span class="badge bg-warning text-dark custom-badge">
 
-                                                            Cancelled
+                                                            Pending
 
                                                         </span>
 
-                                                        <% } else { %>
+                                                        <% } else if( booking.bookingStatus==="Cancelled" ) { %>
 
-                                                            <span class="badge bg-success rounded-pill text-white">
+                                                            <span class="badge bg-danger custom-badge">
 
-                                                                Completed
+                                                                Cancelled
 
                                                             </span>
 
-                                                            <% } %>
+                                                            <% } else if( booking.bookingStatus==="Rejected" ) { %>
 
-                                        </td>
+                                                                <span class="badge bg-danger custom-badge">
 
-                                        <!-- PAYMENT STATUS -->
-                                        <td>
+                                                                    Rejected
 
-                                            <% if( booking.paymentStatus==="Success" ) { %>
+                                                                </span>
 
-                                                <span class="badge bg-success rounded-pill text-white">
+                                                                <% } else { %>
 
-                                                    Success
+                                                                    <span class="badge bg-info custom-badge">
 
-                                                </span>
+                                                                        Completed
 
-                                                <% } else if( booking.paymentStatus==="Pending" ) { %>
+                                                                    </span>
 
-                                                    <span class="badge bg-warning rounded-pill text-white">
+                                                                    <% } %>
 
-                                                        Pending
+                                            </td>
+
+                                            <!-- PAYMENT STATUS -->
+
+                                            <td>
+
+                                                <% if(booking.paymentStatus==="Success" ) { %>
+
+                                                    <span class="badge bg-success custom-badge">
+
+                                                        Success
 
                                                     </span>
 
+                                                    <% } else if( booking.paymentStatus==="Pending" ) { %>
+
+                                                        <span class="badge bg-warning text-dark custom-badge">
+
+                                                            Pending
+
+                                                        </span>
+
+                                                        <% } else if( booking.paymentStatus==="Refunded" ) { %>
+
+                                                            <span class="badge bg-info custom-badge">
+
+                                                                Refunded
+
+                                                            </span>
+
+                                                            <% } else { %>
+
+                                                                <span class="badge bg-danger custom-badge">
+
+                                                                    Failed
+
+                                                                </span>
+
+                                                                <% } %>
+
+                                            </td>
+
+                                            <!-- PAYMENT ID -->
+
+                                            <td>
+
+                                                <% if(booking.paymentId) { %>
+
+                                                    <small class="fw-bold text-success">
+
+                                                        <%= booking.paymentId %>
+
+                                                    </small>
+
                                                     <% } else { %>
 
-                                                        <span class="badge bg-info rounded-pill text-white">
+                                                        <span class="text-muted">
 
-                                                            Failed
+                                                            N/A
 
                                                         </span>
 
                                                         <% } %>
 
-                                        </td>
+                                            </td>
 
-                                        <!-- PAYMENT ID -->
-                                        <td>
+                                            <!-- ACTION -->
 
-                                            <% if(booking.paymentId) { %>
+                                            <td>
 
-                                                <span class="text-success">
+                                                <% if( booking.bookingStatus !=="Cancelled" && booking.bookingStatus
+                                                    !=="Rejected" && booking.bookingStatus !=="Completed" ) { %>
 
-                                                    <%= booking.paymentId %>
+                                                    <a href="/cancel-booking/<%= booking._id %>" class="btn btn-cancel" onclick="
+                                                            return confirm(
+                                                                'Are you sure you want to cancel this booking?'
+                                                            )
+                                                        ">
 
-                                                </span>
+                                                        <i class="fas fa-times-circle me-1"></i>
 
-                                                <% } else { %>
+                                                        Cancel Booking
 
-                                                    <span class="text-info">
+                                                    </a>
 
-                                                        N/A
+                                                    <% } else { %>
 
-                                                    </span>
+                                                        <span class="text-muted">
 
-                                                    <% } %>
+                                                            No Action
 
-                                        </td>
+                                                        </span>
 
-                                    </tr>
+                                                        <% } %>
 
-                                    <% }) %>
+                                            </td>
 
-                                        <% } else { %>
+                                        </tr>
 
-                                            <tr>
+                                        <% }) %>
 
-                                                <td colspan="11" class="text-center text-danger">
+                                            <% } else { %>
 
-                                                    No bookings found
+                                                <!-- EMPTY STATE -->
 
-                                                </td>
+                                                <tr>
 
-                                            </tr>
+                                                    <td colspan="11">
 
-                                            <% } %>
+                                                        <div class="empty-state text-center py-5">
 
-                        </tbody>
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png">
 
-                    </table>
+                                                            <h4>
+
+                                                                No Bookings Found
+
+                                                            </h4>
+
+                                                            <p class="text-muted">
+
+                                                                Your bookings will appear here once you reserve a car.
+
+                                                            </p>
+
+                                                        </div>
+
+                                                    </td>
+
+                                                </tr>
+
+                                                <% } %>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                 </div>
 
             </div>
-        </div>
 
         </div>
 

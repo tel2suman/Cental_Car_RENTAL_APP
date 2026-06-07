@@ -58,153 +58,218 @@
         </div>
         <!-- Header End -->
 
-        <div class="container">
-            <div class="row">
+        <div class="container py-5">
+
+            <!-- TITLE -->
+
+            <div class="text-center mb-5">
+
+                <h1 class="section-title">
+
+                    <i class="fas fa-ban text-danger me-2"></i>
+
+                    Cancelled Bookings
+
+                </h1>
+
+                <p class="section-subtitle mt-3">
+
+                    Explore all your cancelled rental reservations in one place
+
+                </p>
+
+            </div>
+
+            <div class="row g-4">
 
                 <% if(bookings.length> 0) { %>
 
                     <% bookings.forEach((booking, index)=> { %>
 
-                        <div class="col-md-4 mb-4">
+                        <div class="col-xl-4 col-lg-6">
 
-                            <div class="card shadow border-0 h-100">
+                            <!-- CARD -->
 
-                                <!-- CAR IMAGE -->
-                                <img src="<%= booking.carId.image %>" class="card-img-top" alt="Car Image"
-                                    style="height: 220px; object-fit: cover;">
+                            <div class="card cancel-card h-100">
 
-                                <!-- CARD BODY -->
-                                <div class="card-body">
+                                <!-- IMAGE -->
 
-                                    <!-- SERIAL -->
-                                    <div class="mb-2">
+                                <div class="image-wrapper">
 
-                                        <span class="badge badge-danger">
+                                    <img src="<%= booking.carId.image %>" class="cancel-img" alt="Car Image">
 
-                                            Cancelled Booking #
-                                            <%= index + 1 %>
+                                    <div class="cancel-overlay"></div>
 
-                                        </span>
+                                    <!-- BADGE -->
+
+                                    <div class="top-badge">
+
+                                        Cancelled #
+                                        <%= index + 1 %>
 
                                     </div>
 
-                                    <!-- CAR NAME -->
-                                    <h4 class="mb-3">
+                                    <!-- TITLE -->
+
+                                    <h2 class="car-title">
 
                                         <%= booking.carId.brand %>
+
                                             <%= booking.carId.model %>
 
-                                    </h4>
+                                    </h2>
 
-                                    <!-- BOOKING DATES -->
-                                    <p>
+                                </div>
 
-                                        <strong>Pickup Date:</strong>
+                                <!-- BODY -->
 
-                                        <br>
+                                <div class="card-body">
 
-                                        <%= booking.pickupDate.toDateString() %>
+                                    <!-- PRICE -->
 
-                                    </p>
+                                    <div class="price-box text-center">
 
-                                    <p>
+                                        <div class="price-label">
 
-                                        <strong>Return Date:</strong>
+                                            Total Amount
 
-                                        <br>
+                                        </div>
 
-                                        <%= booking.returnDate.toDateString() %>
-
-                                    </p>
-
-                                    <!-- TOTAL DAYS -->
-                                    <p>
-
-                                        <strong>Total Days:</strong>
-
-                                        <%= booking.totalDays %>
-
-                                    </p>
-
-                                    <!-- TOTAL AMOUNT -->
-                                    <p>
-
-                                        <strong>Total Amount:</strong>
-
-                                        <span class="text-success font-weight-bold">
+                                        <div class="price-amount">
 
                                             ₹<%= booking.totalAmount %>
 
-                                        </span>
+                                        </div>
 
-                                    </p>
+                                    </div>
 
-                                    <!-- BOOKING STATUS -->
-                                    <p>
+                                    <!-- DETAILS -->
 
-                                        <strong>Booking Status:</strong>
+                                    <div class="details-box">
 
-                                        <br>
+                                        <div class="details-label">
 
-                                        <span class="badge badge-danger p-2">
+                                            <i class="fas fa-calendar-alt text-danger me-2"></i>
 
-                                            <%= booking.bookingStatus %>
+                                            Pickup Date
 
-                                        </span>
+                                        </div>
 
-                                    </p>
+                                        <div class="details-value">
 
-                                    <!-- PAYMENT STATUS -->
-                                    <p>
+                                            <%= booking.pickupDate.toDateString() %>
 
-                                        <strong>Payment Status:</strong>
+                                        </div>
 
-                                        <br>
+                                    </div>
 
-                                        <span class="badge badge-warning p-2">
+                                    <div class="details-box">
 
-                                            <%= booking.paymentStatus %>
+                                        <div class="details-label">
 
-                                        </span>
+                                            <i class="fas fa-calendar-check text-primary me-2"></i>
 
-                                    </p>
+                                            Return Date
 
-                                    <!-- PAYMENT ID -->
+                                        </div>
+
+                                        <div class="details-value">
+
+                                            <%= booking.returnDate.toDateString() %>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="details-box">
+
+                                        <div class="details-label">
+
+                                            <i class="fas fa-clock text-warning me-2"></i>
+
+                                            Duration
+
+                                        </div>
+
+                                        <div class="details-value">
+
+                                            <%= booking.totalDays %> Days
+
+                                        </div>
+
+                                    </div>
+
                                     <% if(booking.paymentId) { %>
 
-                                        <p>
+                                        <div class="details-box">
 
-                                            <strong>Payment ID:</strong>
+                                            <div class="details-label">
 
-                                            <br>
+                                                <i class="fas fa-credit-card text-info me-2"></i>
 
-                                            <small class="text-primary">
+                                                Payment ID
+
+                                            </div>
+
+                                            <div class="details-value text-primary">
 
                                                 <%= booking.paymentId %>
 
-                                            </small>
+                                            </div>
 
-                                        </p>
+                                        </div>
 
                                         <% } %>
 
-                                            <!-- CANCEL DATE -->
-                                            <p>
+                                            <div class="details-box">
 
-                                                <strong>Cancelled On:</strong>
+                                                <div class="details-label">
 
-                                                <br>
+                                                    <i class="fas fa-ban text-danger me-2"></i>
 
-                                                <%= booking.updatedAt.toDateString() %>
+                                                    Cancelled On
 
-                                            </p>
+                                                </div>
+
+                                                <div class="details-value">
+
+                                                    <%= booking.updatedAt.toDateString() %>
+
+                                                </div>
+
+                                            </div>
+
+                                            <!-- STATUS -->
+
+                                            <div class="d-flex justify-content-between gap-2 mt-4">
+
+                                                <span class="badge bg-danger status-badge w-100 py-3">
+
+                                                    <i class="fas fa-times-circle me-2"></i>
+
+                                                    <%= booking.bookingStatus %>
+
+                                                </span>
+
+                                                <span class="badge bg-warning text-dark status-badge w-100 py-3">
+
+                                                    <i class="fas fa-wallet me-2"></i>
+
+                                                    <%= booking.paymentStatus %>
+
+                                                </span>
+
+                                            </div>
 
                                 </div>
 
                                 <!-- FOOTER -->
-                                <div class="card-footer bg-white border-0">
 
-                                    <button class="btn btn-secondary btn-block" disabled>
+                                <div class="card-footer border-0 bg-white p-4 pt-0">
+
+                                    <button class="cancelled-btn">
+
+                                        <i class="fas fa-ban me-2"></i>
 
                                         Booking Cancelled
 
@@ -220,11 +285,25 @@
 
                             <% } else { %>
 
-                                <div class="col-md-12">
+                                <!-- EMPTY -->
 
-                                    <div class="alert alert-warning text-center">
+                                <div class="col-12">
 
-                                        No cancelled bookings found
+                                    <div class="empty-state text-center">
+
+                                        <img src="https://cdn-icons-png.flaticon.com/512/7486/7486740.png">
+
+                                        <h2>
+
+                                            No Cancelled Bookings Found
+
+                                        </h2>
+
+                                        <p class="text-muted mt-3 mb-0">
+
+                                            Cancelled bookings will appear here once you cancel any reservation.
+
+                                        </p>
 
                                     </div>
 
@@ -233,6 +312,7 @@
                                 <% } %>
 
             </div>
+
         </div>
 
 
